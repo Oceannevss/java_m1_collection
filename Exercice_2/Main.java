@@ -3,19 +3,25 @@ package Exercice_2;
 import java.util.Stack;
 
 public class Main {
-    public static boolean estVerifie(String mot){
+    public static boolean estVerifie(String mot) {
         var stack = new Stack<Character>();
-        for (int i=0; i<mot.length() ; i++){
-            stack.push(mot.charAt(i));
-        }
-        for (var caract: stack){
-            if (caract == '[' && stack.peek() == ']'
-                    || caract == '<' && stack.peek() == '>'
-                    || caract == '(' && stack.peek() == ')'){
-                return true;
+        for (int i = 0; i < mot.length(); i++) {
+            if (mot.charAt(i) == '(' || mot.charAt(i) == '<' || mot.charAt(i) == '[') {
+                stack.push(mot.charAt(i));
+            } else if (mot.charAt(i) == ')' || mot.charAt(i) == '>' || mot.charAt(i) == ']') {
+                if (stack.isEmpty()) {
+                    return false;
+                } else {
+                    var lastCaracter = stack.pop();
+                    if ((mot.charAt(i) == ')' && lastCaracter != '(')
+                            || (mot.charAt(i) == '>' && lastCaracter != '<')
+                            || (mot.charAt(i) == ']' && lastCaracter != '[')) {
+                        return false;
+                    }
+                }
             }
         }
-        return false;
+        return true;
     }
     public static void main(String[] args) {
 
